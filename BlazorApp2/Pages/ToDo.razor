@@ -1,0 +1,58 @@
+﻿@page "/ToDo"
+<PageTitle>ToDo</PageTitle>
+
+<h3>Todo (@todos.Count(todo => !todo.IsDone))</h3>
+
+<style>
+.button {
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {
+  background-color: green;
+  color: black;
+  border: 2px solid black;
+}
+
+.button1:hover {
+  background-color: #4CAF50;
+  color: black;
+}
+
+.button2 {background-color: #008CBA;} /* Blue */
+</style>
+
+
+<ul>
+    @foreach (var todo in todos)
+    {
+        <input @bind="todo.Title" />
+        
+        <input type="checkbox" @bind="todo.IsDone" />
+        <h1></h1>   
+    }
+</ul>
+
+<input id="myInput" placeholder="Something todo" @bind="newTodo"/>
+<button class="button1" @onclick="AddTodo">Add todo</button>
+
+@code {
+    private List<TodoItem> todos = new();
+    private string? newTodo;
+    private void AddTodo(){
+        
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            todos.Add(new TodoItem{Title = newTodo});
+            newTodo = string.Empty;
+        }
+    }  
+}
